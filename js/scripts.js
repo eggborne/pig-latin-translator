@@ -11,9 +11,11 @@ $(function(){
   })
 })
 function displayResults() {
+  $("#result").html("")
   resultArray.forEach(function(word,i){
     $('#result').append(resultArray[i] + " ")
   })
+    resultArray = []
 }
 
 function convert(word) {
