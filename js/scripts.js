@@ -1,21 +1,56 @@
-var vowels = ["a","e","i","o","u"]
+var vowels = ["a","e","i","o","u","y"]
 var resultArray = []
+var hyphenatedPhrases = []
 $(function(){
   $("button").click(function(){
     event.preventDefault()
     var wordArray = $("input").val().split(" ")
+
     wordArray.forEach(function(word){
-      resultArray.push(convert(word))
+      if (word.includes("-")) {
+        console.log(word + " has a hyphen")
+        hyphenatedSplitWord = word.split("-")
+        console.log("new array:")
+        console.log(hyphenatedSplitWord)
+        var indexArray = []
+        for (i=0; i<hyphenatedSplitWord.length; i++) {
+
+          var segment = hyphenatedSplitWord[i]
+          console.log(segment)
+          resultArray.push(convert(segment))
+          var newIndex = resultArray.length-1
+          console.log(newIndex)
+          indexArray.push(newIndex)
+          console.log("ind arr")
+          console.log(indexArray)
+        }
+        hyphenatedPhrases.push(indexArray)
+      } else {
+        resultArray.push(convert(word))
+      }
+      console.log(hyphenatedPhrases)
     })
+    console.log(resultArray)
     displayResults()
   })
 })
 function displayResults() {
+  var toAppend = resultArray[i] + " "
   $("#result").html("")
   resultArray.forEach(function(word,i){
-    $('#result').append(resultArray[i] + " ")
+
+    hyphenatedPhrases.forEach(function(indexArray){
+      if (indexArray[0]===i) {
+        console.log(word + " was hyphenated!!")
+
+        toAppend = resultArray[indexArray[0]] + "-" + resultArray[indexArray[1]] + " "
+        resultArray.splice(indexArray[0],2)
+      }
+    })
+    $("#result").append(toAppend)
+    // $("#result").append(toAppend)
   })
-    resultArray = []
+  resultArray = []
 }
 
 function convert(word) {
@@ -43,7 +78,7 @@ function convert(word) {
       }
     }
   }
-  if (isVowel(firstLetter) && !qException) {
+  if (isVowel(firstLetter) && (!qException || firstLetter==="y")) {
     // first letter a vowel
     result += "way"
   } else {
