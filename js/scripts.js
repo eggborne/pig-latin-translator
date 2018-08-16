@@ -35,16 +35,15 @@ $(function(){
   })
 })
 function displayResults() {
-  var toAppend = resultArray[i] + " "
+
   $("#result").html("")
   resultArray.forEach(function(word,i){
-
+    var toAppend = resultArray[i] + " "
     hyphenatedPhrases.forEach(function(indexArray){
       if (indexArray[0]===i) {
         console.log(word + " was hyphenated!!")
-
+        console.log(resultArray[indexArray[0]] + " and " + resultArray[indexArray[1]])
         toAppend = resultArray[indexArray[0]] + "-" + resultArray[indexArray[1]] + " "
-        resultArray.splice(indexArray[0],2)
       }
     })
     $("#result").append(toAppend)
